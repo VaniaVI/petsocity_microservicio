@@ -2,6 +2,8 @@ package com.petsocity.petsocity.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@JsonPropertyOrder({"id", "nombre", "apellido", "email", "contrasenia", "telefono", "direccion", "region" , "comuna", "fecha_creacion"})  
 @Entity
 @Table(name = "usuario")
 @Data
@@ -29,11 +32,11 @@ public class Usuario {
 
     @NotBlank(message = "Campo obligatorio")
     @Column(name = "nombre" ,nullable = false)
-    private String Nombre;
+    private String nombre;
 
     @NotBlank(message = "Campo obligatorio")
     @Column(name = "apellido", nullable = false)
-    private String Apellido;
+    private String apellido;
     
     @Email(message = "El correo no tiene un formato valido")
     @Pattern(

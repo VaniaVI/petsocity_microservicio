@@ -29,6 +29,7 @@ import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @Tag(name = "Usuarios", description = "Operaciones CRUD de usuarios")
@@ -123,6 +124,27 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        String email = credentials.get("email");
+        String contrasenia = credentials.get("contrasenia");
+    
+        Usuario usuario = usuarioService.loginUsuario(email, contrasenia);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Correo o contraseña incorrecta"));
+        }
+    
+        // Opcional: crear cookie de sesión aquí    
+        return ResponseEntity.ok(Map.of(
+            "id", usuario.getId(),
+            "nombre", usuario.getNombre(),
+            "correo", usuario.getEmail()
+        ));
+    }
+    
+
+
     // Actualizar usuario
     @PutMapping(value = "/{id}", produces = {MediaTypes.HAL_JSON_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Actualizar usuario", description = "Modifica atributos del usuario por su ID")
@@ -189,5 +211,16 @@ public class UsuarioController {
         return ResponseEntity.ok()
             .contentType(MediaTypes.HAL_JSON)
             .body(respuesta);
+    }
+
+    //Obtener las comunas y regiones
+    @GetMapping("/regiones")
+    public String getRegiones() {
+        return usuarioService.obtenerRegiones();
+    }
+
+    @GetMapping("/regiones/{codigo}/comunas")
+    public String getComunas(@PathVariable String codigo) {
+        return usuarioService.obtenerComunas(codigo);
     }
 }

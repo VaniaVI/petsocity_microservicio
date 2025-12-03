@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.petsocity.petsocity.model.Usuario;
 import com.petsocity.petsocity.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -26,6 +28,25 @@ public class UsuarioService {
     public Usuario obtenerPorIdUsuario(Long id) {
         return usuarioRepository.findById(id).orElse(null);
     }
+
+    public Usuario obtenerPorCorreo(String email) {
+    return usuarioRepository.findByEmail(email)
+            .orElse(null);
+}
+
+    // Método para validar la contraseña
+    public boolean validarPassword(String rawPassword, String passwordBD) {
+        return rawPassword.equals(passwordBD);
+    }
+
+    // Método para login
+public Usuario loginUsuario(String email, String contrasenia) {
+    Usuario usuario = usuarioRepository.findByEmail(email).orElse(null);
+    if (usuario == null) return null;
+    if (!validarPassword(contrasenia, usuario.getContrasenia())) return null;
+    return usuario;
+}
+
 
     public Usuario crearUsuario(Usuario usuario) {
         if (usuario.getId() != null) {
@@ -85,5 +106,19 @@ public class UsuarioService {
         } else {
             return false;
         }
+    }
+
+    //Obtener las regiones y comunas    
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public String obtenerRegiones() {
+        String url = "http://localhost:8082/api/ubicaciones/regiones";
+
+        return restTemplate.getForObject(url, String.class);
+    }
+    public String obtenerComunas(String codigoRegion) {
+        String url = "http://localhost:8082/api/ubicaciones/regiones/{codigo}/comunas";
+        return restTemplate.getForObject(url, String.class, codigoRegion);
     }
 }
