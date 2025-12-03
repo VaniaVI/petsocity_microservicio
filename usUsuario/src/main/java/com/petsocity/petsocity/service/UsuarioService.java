@@ -34,17 +34,11 @@ public class UsuarioService {
         if (usuarioRepository.existsByEmail(usuario.getEmail())){
             throw new IllegalArgumentException("El correo ingresado ya esta registrado");
         }
-        if (!usuario.getPrimerNombre().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
+        if (!usuario.getNombre().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
         throw new IllegalArgumentException("El primer nombre solo debe contener letras");
         }
-        if (!usuario.getSegundoNombre().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
-        throw new IllegalArgumentException("El segundo nombre solo debe contener letras");
-        }
-        if (!usuario.getPrimerApellido().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
+        if (!usuario.getApellido().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
         throw new IllegalArgumentException("El primer apellido solo debe contener letras");
-        }
-        if (!usuario.getSegundoApellido().matches("^[A-Za-zÁÉÍÓÚÑáéíóúñ ]+$")) {
-        throw new IllegalArgumentException("El segundo apellido solo debe contener letras");
         }
         if (!usuario.getEmail().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
         throw new IllegalArgumentException("El correo debe tener un formato válido");
@@ -54,27 +48,31 @@ public class UsuarioService {
 
     public Usuario actualizarUsuario(Long id, Usuario datosActualizados) {
         return usuarioRepository.findById(id).map(usuario -> {
-            if (datosActualizados.getPrimerNombre() != null) {
-                usuario.setPrimerNombre(datosActualizados.getPrimerNombre());
+            if (datosActualizados.getNombre() != null) {
+                usuario.setNombre(datosActualizados.getNombre());
             }
-            if (datosActualizados.getSegundoNombre() != null) {
-                usuario.setSegundoNombre(datosActualizados.getSegundoNombre());
-            }
-            if (datosActualizados.getPrimerApellido() != null) {
-                usuario.setPrimerApellido(datosActualizados.getPrimerApellido());
-            }
-            if (datosActualizados.getSegundoApellido() != null) {
-                usuario.setSegundoApellido(datosActualizados.getSegundoApellido());
+            if (datosActualizados.getApellido() != null) {
+                usuario.setApellido(datosActualizados.getApellido());
             }
             if (datosActualizados.getEmail() != null) {
                 usuario.setEmail(datosActualizados.getEmail());
             }
-            if (datosActualizados.getDireccion() != null) {
-                usuario.setDireccion(datosActualizados.getDireccion());
-            }
             if (datosActualizados.getContrasenia() != null){
                 usuario.setContrasenia(datosActualizados.getContrasenia());
             }
+            if (datosActualizados.getTelefono() != null) {
+                usuario.setTelefono(datosActualizados.getTelefono());
+            }
+            if (datosActualizados.getDireccion() != null) {
+                usuario.setDireccion(datosActualizados.getDireccion());
+            }
+            if (datosActualizados.getRegion() != null) {
+                usuario.setRegion(datosActualizados.getRegion());
+            }
+            if (datosActualizados.getComuna() != null) {
+                usuario.setComuna(datosActualizados.getComuna());
+            }
+
             return usuarioRepository.save(usuario);
         }).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }

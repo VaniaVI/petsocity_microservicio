@@ -24,10 +24,8 @@ public class DataLoader implements CommandLineRunner{
         for (int i = 0; i < 3; i++) {
             Usuario usuario = new Usuario();
             //usuario.setId(i + 1);
-            usuario.setPrimerNombre(faker.name().firstName());
-            usuario.setSegundoNombre(faker.name().firstName());
-            usuario.setPrimerApellido(faker.name().lastName());
-            usuario.setSegundoApellido(faker.name().lastName());
+            usuario.setNombre(faker.name().firstName());
+            usuario.setApellido(faker.name().lastName());
             usuario.setEmail(faker.internet().emailAddress());
             usuario.setContrasenia(faker.internet().password());
             usuario.setDireccion(faker.address().fullAddress());

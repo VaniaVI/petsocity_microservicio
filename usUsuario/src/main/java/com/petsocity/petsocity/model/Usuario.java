@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,25 +28,17 @@ public class Usuario {
     private Long id;
 
     @NotBlank(message = "Campo obligatorio")
-    @Column(name = "primer_nombre" ,nullable = false)
-    private String primerNombre;
+    @Column(name = "nombre" ,nullable = false)
+    private String Nombre;
 
     @NotBlank(message = "Campo obligatorio")
-    @Column(name = "segundo_nombre", nullable = false)
-    private String segundoNombre;
-
-    @NotBlank(message = "Campo obligatorio")
-    @Column(name = "primer_apellido", nullable = false)
-    private String primerApellido;
-
-    @NotBlank(message = "Campo obligatorio")
-    @Column(name = "segundo_apellido",nullable = false)
-    private String segundoApellido;
+    @Column(name = "apellido", nullable = false)
+    private String Apellido;
     
     @Email(message = "El correo no tiene un formato valido")
     @Pattern(
         regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$",
-        message = "Debe tener el formato nombre@dominio.com")
+        message = "Debe tener el formato nombre@duoc.cl")
     @NotBlank(message = "Campo obligatorio")
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -56,9 +48,20 @@ public class Usuario {
     @Column(name = "contrasenia", nullable = false)
     private String contrasenia;
 
+    @Column(name = "telefono", nullable = false, columnDefinition = "TEXT")
+    private String telefono;
+
     @NotBlank(message = "Campo obligatorio")
     @Column(name = "direccion", nullable = false, columnDefinition = "TEXT")
     private String direccion;
+
+    @NotBlank(message = "Campo obligatorio")
+    @Column(name = "region", nullable = false, columnDefinition = "TEXT")
+    private String region;
+
+    @NotBlank(message = "Campo obligatorio")
+    @Column(name = "comuna", nullable = false, columnDefinition = "TEXT")
+    private String comuna;
 
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
