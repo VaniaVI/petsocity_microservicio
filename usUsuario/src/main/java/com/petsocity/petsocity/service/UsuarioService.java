@@ -113,12 +113,12 @@ public Usuario loginUsuario(String email, String contrasenia) {
     private RestTemplate restTemplate;
 
     public String obtenerRegiones() {
-        String url = "http://localhost:8082/api/ubicaciones/regiones";
+        String url = "petsocityusubicaciones-production.up.railway.app/api/ubicaciones/regiones";
 
         return restTemplate.getForObject(url, String.class);
     }
     public String obtenerComunas(String codigoRegion) {
-        String url = "http://localhost:8082/api/ubicaciones/regiones/{codigo}/comunas";
+        String url = "petsocityusubicaciones-production.up.railway.app/api/ubicaciones/regiones/{codigo}/comunas";
         return restTemplate.getForObject(url, String.class, codigoRegion);
     }
 }
