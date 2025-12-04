@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -68,4 +69,10 @@ public class Usuario {
 
     @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
+
+    @PrePersist
+    public void prePersist() {
+    this.fechaCreacion = LocalDateTime.now();
+}
+
 }
