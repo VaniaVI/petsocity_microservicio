@@ -2,6 +2,8 @@ package com.petsocity.petsocity.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
@@ -68,11 +70,7 @@ public class Usuario {
     private String comuna;
 
     @Column(name = "fecha_creacion", updatable = false)
+    @CreationTimestamp
     private LocalDateTime fechaCreacion;
-
-    @PrePersist
-    public void prePersist() {
-    this.fechaCreacion = LocalDateTime.now();
-}
 
 }
